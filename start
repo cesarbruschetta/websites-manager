@@ -1,0 +1,4 @@
+#!/bin/bash
+
+//opt/projetos/sitesmanager/bin/python /opt/projetos/sitesmanager/websites_manager/manage.py runserver
+

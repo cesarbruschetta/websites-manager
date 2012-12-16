@@ -4,5 +4,5 @@
 
 export DATABASE_URL='postgres://root:root@localhost:5432/websites_manager'
 
-/opt/projetos/sitesmanager/bin/python /opt/projetos/sitesmanager/websites_manager/manage.py runserver
+/opt/projetos/sitesmanager/bin/python /opt/projetos/sitesmanager/websites_manager/manage.py syncdb
 

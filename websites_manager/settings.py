@@ -97,6 +97,16 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",                               
+    'websites_manager.context_processors.context',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -130,7 +140,14 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'websites_manager.app',
 )
+
+# Caminho para a tela de login padrão
+LOGIN_URL = '/login'
+
+# Caminho para a tela de logout padrão
+LOGOUT_URL = '/logout'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

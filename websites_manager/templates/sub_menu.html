@@ -1,0 +1,13 @@
+{% load utils %}
+<div id="templatemo_submenu">
+	<ul>
+		{% for item in itens %}
+			<li >
+				<a href="/painel/{{item.id}}"
+				   class="{% if '/painel/'|soma:item.id in current_path %}current{% endif %}">
+					<span></span>
+					{{ item.name }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+</div>

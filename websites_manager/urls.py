@@ -11,6 +11,12 @@ from websites_manager.app.views import *
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', home, name='home'),
+    
+    url(r'^hello/$', hello, name='hello'),
+    
+    url(r'^painel/$', paineis, name='Paineis'),
+    
+    url(r'^painel/(?P<id>\w{0,50})$', painel, name='Painel'),
     # url(r'^websites_manager/', include('websites_manager.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -20,11 +26,10 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     
     # Autenticação
-    url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$','django.contrib.auth.views.logout_then_login',name='logout'),
     
-    
     #Static
-    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/img/favicon.ico'}),
+    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/images/favicon.ico'}),
     
 )

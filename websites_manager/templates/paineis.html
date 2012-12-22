@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %} Painéis de Controle {% endblock %}
+
+{% block content %}
+	<h1>Painel de Controle</h1>
+	<h4>
+		Utilize a lista abaixo para gerenciar um dos painéis de controle externos a aplicação
+	</h4>
+	<p>
+		<ul>
+			{% for item in itens %}
+				<li>
+					<a href="/painel/{{item.id}}">{{ item.name }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	<p>
+		
+	</p>
+{% endblock%}

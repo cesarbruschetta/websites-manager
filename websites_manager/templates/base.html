@@ -1,11 +1,65 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html xmlns="http://www.w3.org/1999/xhtml"  lang="pt-br">
-<head>
-	<title>
-		{% block title %}{% endblock %} - {{ website_title }}
-	</title>
-	{% block head %}{% endblock %}
-</head>
-<body>
-    <div id="content">{% block content %}{% endblock %}</div>
-</body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>{% block title %}{% endblock %} - {{ website_title }}</title>
+		
+		<meta name="keywords" content="Metallic Website Template, free css template, free website template, CSS, XHTML" />
+		<meta name="description" content="Metallic Website - free xhtml/css website template by templatemo.com" />
+		
+		<link href="/static/templatemo_style.css" rel="stylesheet" type="text/css" />
+		<link href="/static/style_submenu.css" rel="stylesheet" type="text/css" />
+		<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
+		
+		{% block head %}{% endblock %}
+		{% block extrastyle %}{% endblock %}
+		{% block extrahead %}{% endblock %}
+	</head>
+	<body>
+		<div id="templatemo_container">
+			<div id="templatemo_top_panel">
+				<!--  Free CSS Templates @ www.TemplateMo.com  -->   
+		    	<div id="top_panel_ls">
+		            <div id="templatemo_site_title">Metallic Website</div>
+		        </div>
+		
+		      <div id="top_panel_rs">
+		            <div id="search_section">
+		               <div class="cleaner"></div>
+		            </div> 
+		            
+		            <div id="templatemo_menu">
+		                {% include "menu.html" %}  
+		                <div class="cleaner"></div> 	
+		            </div> <!-- end of menu -->
+		
+		            <div class="cleaner"></div>
+			  </div>    
+		    </div> <!-- end of top _panel -->
+		    <!-- start of banner -->
+			<div id="ct"></div>
+		    <div id="templatemo_banner">
+				{% include "sub_menu.html" %}		    	
+		    </div>
+		    <div id="cb"></div>
+			<!-- end of banner -->
+		    <div id="ct"></div>
+		    <div id="templatemo_content">
+		    	{% block breadcrumbs %}{% endblock %}
+				{% block messages %}{% endblock %}
+				{% block content_title %}{% endblock %}
+				<div id="content-admin">
+					{% block content %}{% endblock %}
+				</div>
+		    	<div class="cleaner">&nbsp;</div>
+		     	<!-- end of content -->
+			</div>
+			<div id="cb"></div>
+		    
+		    <div id="templatemo_footer">
+		    	<p id="sobre">Copyright &copy; 2012 <a href="/static/sobre.html" target="popupwindow" onclick='window.open("/static/sobre.html", "popupwindow", "scrollbars=yes,width=590,height=360");return true'>Cesar Augusto</a> - Todos os direitos reservados</p>
+		    </div> <!-- end of footer -->
+		</div> <!-- end of container -->
+		{% include "analytics.html" %}
+	</body>
+</html>

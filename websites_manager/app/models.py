@@ -33,13 +33,26 @@ class Comando(models.Model):
     def __unicode__(self):
         return self.name
     
-    name = models.CharField(max_length=200)
-    description = models.TextField()
+    name = models.CharField('Nome do comando', max_length=200)
+    description = models.TextField('Descrição')
     
     comando = models.CharField(max_length=200)
-    is_action = models.BooleanField(default=True)
+    is_action = models.BooleanField('Comando de ação, ou para listagem',default=True)
+    is_root = models.BooleanField('Necessita de permissão root',default=False)
 
-     
+class Script(models.Model):
+    
+    def __unicode__(self):
+        return self.name
+    
+    name = models.CharField('Nome do Script', max_length=200)
+    description = models.TextField('Descrição')
+    
+    script = models.TextField()
+    is_action = models.BooleanField('Comando de ação, ou para listagem',default=True)
+    is_root = models.BooleanField('Necessita de permissão root',default=False)
+
+
 class Evento(models.Model):
     
     def __unicode__(self):
@@ -49,8 +62,8 @@ class Evento(models.Model):
     description = models.TextField('Descrição')
     
     comando = models.ForeignKey(Comando)
-    #if_true = models.ManyToManyField(Comando) #,'Ação se comando for verdadeiro')
-    #if_false = models.ManyToManyField(Comando) #,'Ação se comando for falso')
+    script = models.ForeignKey(Script)
+    
     intervalo_tempo = models.CharField('Intervalo do eventos, em minutos', max_length=20)
     
     #Host para executar o evento

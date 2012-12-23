@@ -8,6 +8,8 @@ admin.autodiscover()
 #Views methods aplicação
 from websites_manager.app.views import *
 
+from settings import PATH_STATIC
+
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', home, name='home'),
@@ -31,5 +33,8 @@ urlpatterns = patterns('',
     
     #Static
     (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/images/favicon.ico'}),
+    
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': PATH_STATIC, 'show_indexes': False}),      
     
 )

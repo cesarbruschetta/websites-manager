@@ -67,6 +67,8 @@ MEDIA_URL = '/media/'
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = ''
 
+PATH_STATIC = os.path.join(PROJECT_ROOT_PATH, "static")
+
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
@@ -141,6 +143,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'websites_manager.app',
+    'gunicorn',
 )
 
 # Caminho para a tela de login padrão

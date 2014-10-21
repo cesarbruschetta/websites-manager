@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export DATABASE_URL='postgres://root:root@localhost:5432/websites_manager'
+/opt/projetos/sitesmanager/bin/python ./manage.py celery worker -l info -E

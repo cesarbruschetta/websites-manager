@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib import admin
 from datetime import datetime
 
 class Host(models.Model):
@@ -29,15 +30,17 @@ class PainelControle(models.Model):
 
     
 class Comando(models.Model):
+    class Admin(admin.ModelAdmin):
+        list_display = ('id', 'name',)
     
-    def __unicode__(self):
-        return self.name
+        def __unicode__(self):
+            return '%s - %s' %(self.name, self.comando)
     
     name = models.CharField('Nome do comando', max_length=200)
     description = models.TextField('Descrição')
     
     comando = models.CharField(max_length=200)
-    is_action = models.BooleanField('Comando de ação, ou para listagem',default=True)
+    is_action = models.BooleanField('Comando de ação (desmarque esta opção se for para listagem)',default=True)
     is_root = models.BooleanField('Necessita de permissão root',default=False)
 
 class Script(models.Model):
@@ -53,21 +56,21 @@ class Script(models.Model):
     is_root = models.BooleanField('Necessita de permissão root',default=False)
 
 
-class Evento(models.Model):
-    
-    def __unicode__(self):
-        return self.name
-    
-    name = models.CharField('Nome do eventos', max_length=200)
-    description = models.TextField('Descrição')
-    
-    comando = models.ForeignKey(Comando)
-    script = models.ForeignKey(Script)
-    
-    intervalo_tempo = models.CharField('Intervalo do eventos, em minutos', max_length=20)
-    
-    #Host para executar o evento
-    host = models.ForeignKey(Host)
+#class Evento(models.Model):
+#    
+#    def __unicode__(self):
+#        return self.name
+#    
+#    name = models.CharField('Nome do eventos', max_length=200)
+#    description = models.TextField('Descrição')
+#    
+#    comando = models.ForeignKey(Comando)
+#    script = models.ForeignKey(Script)
+#    
+#    intervalo_tempo = models.CharField('Intervalo do eventos, em minutos', max_length=20)
+#    
+#    #Host para executar o evento
+#    host = models.ForeignKey(Host)
     
 class Log(models.Model):
 

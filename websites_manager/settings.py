@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Django settings for websites_manager project.
-import dj_database_url, os
+import dj_database_url, os, djcelery
+djcelery.setup_loader()
 
 DEBUG = True
 
@@ -144,6 +145,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'websites_manager.app',
     'gunicorn',
+    'kombu.transport.django',
+    'djcelery',
 )
 
 # Caminho para a tela de login padrão
@@ -151,6 +154,14 @@ LOGIN_URL = '/login'
 
 # Caminho para a tela de logout padrão
 LOGOUT_URL = '/logout'
+
+#Celery config
+#BROKER_URL = "mongodb://127.0.0.1:27017/manager_tasks"
+BROKER_BACKEND = 'django'
+
+CELERY_IMPORTS = ('websites_manager.app.tasks',)
+CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

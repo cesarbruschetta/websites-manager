@@ -1,40 +1,36 @@
-# -*- coding: utf-8 -*-
-from django.conf.urls import patterns, include, url
+"""websites_manager URL Configuration
 
-# Uncomment the next two lines to enable the admin:
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.10/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.conf.urls import url, include
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+"""
+from django.conf.urls import include, url
+from django.conf.urls.static import static
+from django.conf import settings
 from django.contrib import admin
-admin.autodiscover()
 
-#Views methods aplicação
-from websites_manager.app.views import *
+from websites_manager.core.views import file_serve
 
-from settings import PATH_STATIC
 
-urlpatterns = patterns('',
-    # Examples:
-    url(r'^$', home, name='home'),
-    
-    url(r'^hello/$', hello, name='hello'),
-    
-    url(r'^painel/$', paineis, name='Paineis'),
-    
-    url(r'^painel/(?P<id>\w{0,50})$', painel, name='Painel'),
-    # url(r'^websites_manager/', include('websites_manager.foo.urls')),
+urlpatterns = [
+    # url(r'^$', home, name='home'),
+    url(r'^admin/', admin.site.urls),
+    url(r'^files/(?P<path_name>.*)', file_serve, name='file_serve'),
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
-    
-    # Autenticação
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}, name='login'),
-    url(r'^logout/$','django.contrib.auth.views.logout_then_login',name='logout'),
-    
-    #Static
-    (r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/images/favicon.ico'}),
-    
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': PATH_STATIC, 'show_indexes': False}),      
-    
-)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]

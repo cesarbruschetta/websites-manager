@@ -18,8 +18,9 @@ develop-eggs
 lib
 lib64
 
-# Installer logs
+# Installer  / logs
 pip-log.txt
+*.log
 
 # Unit test / coverage reports
 .coverage
@@ -35,3 +36,6 @@ nosetests.xml
 .pydevproject
 .settings*
 .tmp*
+
+#DB
+*.sqlite*

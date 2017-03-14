@@ -9,21 +9,34 @@ import magic
 # Create your views here.
 def file_serve(request, path_name):
     template_name = "file_server.html"
-    context = {}
 
     local_path = path.join(settings.ROOT_FILE_PATH, path_name)
 
     # import pdb; pdb.set_trace()
 
-    files = []
+    imagens = []
+    videos = []
+    others = []
     directories = []
     for entry in scandir(local_path):
         if entry.is_file():
-            files.append({
-                "name": entry.name,
-                "path": entry.path.replace(settings.ROOT_FILE_PATH, settings.STATIC_URL),
-                "type": magic.from_file(entry.path, mime=True)
-            })
+            file_path = entry.path.replace(settings.ROOT_FILE_PATH, settings.STATIC_URL)
+            mine_type = magic.from_file(entry.path, mime=True)
+            if "image" in mine_type:
+                imagens.append({
+                    "name": entry.name,
+                    "path": file_path,
+                })
+            elif "video" in mine_type:
+                videos.append({
+                    "name": entry.name,
+                    "path": file_path,
+                })
+            else:
+                others.append({
+                    "name": entry.name,
+                    "path": file_path,
+                })
 
         if entry.is_dir():
             directories.append({
@@ -31,7 +44,12 @@ def file_serve(request, path_name):
                 "path": entry.path.replace(settings.ROOT_FILE_PATH, "")
             })
 
-    # print(files)
-    print(directories)
+    context = {
+        "path_name": path_name,
+        "directories": directories,
+        "imagens": imagens,
+        "videos": videos,
+        "others": others,
+    }
 
     return render(request, template_name, context)

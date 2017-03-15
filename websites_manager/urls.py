@@ -27,7 +27,10 @@ urlpatterns = [
     url(r'^files/(?P<path_name>.*)', file_serve, name='file_serve'),
 
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.FILE_PATH_URL, document_root=settings.FILE_PATH_ROOT)
+
 
 if settings.DEBUG:
     import debug_toolbar

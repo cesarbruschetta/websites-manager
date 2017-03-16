@@ -20,10 +20,11 @@ def file_serve(request, path_name):
     others = []
     directories = []
     for entry in scandir(local_path):
+        file_path = force_bytes(entry.path).decode('utf8', 'surrogateescape')
+
         if entry.is_file():
-            file_path = entry.path.replace(settings.FILE_PATH_ROOT,
-                                           settings.FILE_PATH_URL)
-            file_path = force_bytes(file_path).decode('utf8', 'surrogateescape')
+            file_path = file_path.replace(settings.FILE_PATH_ROOT,
+                                          settings.FILE_PATH_URL)
 
             mine_type = magic.from_file(entry.path, mime=True)
             if "image" in mine_type:
@@ -46,7 +47,7 @@ def file_serve(request, path_name):
         if entry.is_dir():
             directories.append({
                 "name": entry.name,
-                "path": entry.path.replace(settings.FILE_PATH_ROOT, "")
+                "path": file_path.replace(settings.FILE_PATH_ROOT, "")
             })
 
     context = {

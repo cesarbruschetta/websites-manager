@@ -22,6 +22,8 @@ def file_serve(request, path_name):
         if entry.is_file():
             file_path = entry.path.replace(settings.FILE_PATH_ROOT,
                                            settings.FILE_PATH_URL)
+            file_path = file_path.decode('utf8', 'surrogateescape')
+
             mine_type = magic.from_file(entry.path, mime=True)
             if "image" in mine_type:
                 imagens.append({

@@ -176,6 +176,6 @@ FILE_PATH_ROOT = "/home/ubuntu/"
 FILE_PATH_URL = "/static_files/"
 
 try:
-    from custom_settings import *
+    from .custom_settings import *
 except ImportError:
     pass

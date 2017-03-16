@@ -1,6 +1,7 @@
 
 from django.shortcuts import render
 from django.conf import settings
+from django.utils.encoding import force_bytes
 
 from os import scandir, path
 import magic
@@ -22,7 +23,7 @@ def file_serve(request, path_name):
         if entry.is_file():
             file_path = entry.path.replace(settings.FILE_PATH_ROOT,
                                            settings.FILE_PATH_URL)
-            file_path = file_path.decode('utf8', 'surrogateescape')
+            file_path = force_bytes(file_path).decode('utf8', 'surrogateescape')
 
             mine_type = magic.from_file(entry.path, mime=True)
             if "image" in mine_type:

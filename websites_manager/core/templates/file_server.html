@@ -3,9 +3,11 @@
 
 {% block content %}
 
-    <div class="page-header">
-        <h1>{{ path_name }}</h1>
-        <a href="{% url 'file_serve' path_back %}">Voltar</a>
+    <div >
+        <h2>Pasta Atual
+          <span class="label label-primary">{{ path_name }}</span>
+        </h2>
+        <a class="btn btn-xs btn-primary" href="{% url 'file_serve' path_back %}">Voltar</a>
     </div>
 
     {% if directories_length %}
@@ -14,14 +16,12 @@
               <table class="table">
                   <thead>
                     <tr>
-                      <th>#</th>
                       <th>Local</th>
                     </tr>
                   </thead>
               <tbody>
                   {% for path in directories %}
                     <tr>
-                      <td>{{ forloop.count }}</td>
                       <td>
                           <a href="{% url 'file_serve' path.path %}">{{ path.name }}</a>
                       </td>
@@ -34,17 +34,8 @@
     {% endif %}
 
     {% if imagens_length %}
-      <div class="page-header">
-          <h1>Fotos</h1>
-      </div>
+      <h4>Fotos</h4>
       <div id="carousel-generic" class="carousel slide" data-ride="carousel" data-wrap="false">
-          {% with ''|center:imagens_length as range %}
-              <ol class="carousel-indicators">
-                  {% for i in range %}
-                    <li data-target="#carousel-generic" data-slide-to="{{ forloop.count0 }}" {% if forloop.first %}class="active"{% endif %}></li>
-                  {% endfor %}
-              </ol>
-          {% endwith %}
           <div class="carousel-inner" role="listbox">
               {% for img in imagens %}
                 <div class="item {% if forloop.first %}active{% endif %}">
@@ -64,9 +55,7 @@
       </div>
     {% endif %}
     {% if videos_length %}
-      <div class="page-header">
-          <h1>Videos</h1>
-      </div>
+       <h4>Videos</h4>
       {% for video in videos %}
         <!-- 16:9 aspect ratio -->
         <div class="embed-responsive embed-responsive-16by9">
@@ -79,24 +68,20 @@
       {% endif %}
 
       {% if others_length %}
-        <div class="page-header">
-            <h1>Arquivos</h1>
-        </div>
+        <h4>Arquivos</h4>
         <div class="row">
             <div class="col-md-12">
                 <table class="table">
                     <thead>
                       <tr>
-                        <th>#</th>
                         <th>Local</th>
                       </tr>
                     </thead>
                 <tbody>
                     {% for other in others %}
                       <tr>
-                        <td>{{ forloop.count }}</td>
                         <td>
-                            <a href="other.path" target="blank">{{ other.name }}</a>
+                            <a href="{{other.path}}" target="blank">{{ other.name }}</a>
                         </td>
                       </tr>
                     {% endfor %}
@@ -105,7 +90,4 @@
             </div>
         </div>
     {% endif %}
-
-
-
 {% endblock%}

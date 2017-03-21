@@ -18,14 +18,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 
-from websites_manager.core.views import file_serve
+from websites_manager.core.views import home
 
 
 urlpatterns = [
-    # url(r'^$', home, name='home'),
+    url(r'^$', home, name='home'),
     url(r'^admin/', admin.site.urls),
-    url(r'^files/(?P<path_name>.*)', file_serve, name='file_serve'),
-
+    url(r'^core/', include('websites_manager.core.urls', namespace='core')),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

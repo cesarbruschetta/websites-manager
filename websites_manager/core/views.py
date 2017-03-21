@@ -8,6 +8,13 @@ import magic
 
 
 # Create your views here.
+
+def home(request):
+    context = {}
+
+    return render(request, "home.html", context)
+
+
 def file_serve(request, path_name):
     template_name = "file_server.html"
 
@@ -25,8 +32,11 @@ def file_serve(request, path_name):
         if entry.is_file():
             file_path = file_path.replace(settings.FILE_PATH_ROOT,
                                           settings.FILE_PATH_URL)
+            try:
+                mine_type = magic.from_file(entry.path, mime=True)
+            except Exception:
+                mine_type = ""
 
-            mine_type = magic.from_file(entry.path, mime=True)
             if "image" in mine_type:
                 imagens.append({
                     "name": entry.name,

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "include/base.html" %}
 {% block title %} Pasta {{ path_local }} {% endblock %}
 
 {% block content %}
@@ -7,7 +7,7 @@
         <h2>Pasta Atual
           <span class="label label-primary">{{ path_name }}</span>
         </h2>
-        <a class="btn btn-xs btn-primary" href="{% url 'file_serve' path_back %}">Voltar</a>
+        <a class="btn btn-xs btn-primary" href="{% url 'core:file_serve' path_back %}">Voltar</a>
     </div>
 
     {% if directories_length %}
@@ -23,7 +23,7 @@
                   {% for path in directories %}
                     <tr>
                       <td>
-                          <a href="{% url 'file_serve' path.path %}">{{ path.name }}</a>
+                          <a href="{% url 'core:file_serve' path.path %}">{{ path.name }}</a>
                       </td>
                     </tr>
                   {% endfor %}

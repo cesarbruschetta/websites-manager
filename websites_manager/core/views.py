@@ -63,6 +63,7 @@ def file_serve(request, path_name):
     context = {
         "path_name": path_name,
         "path_back": path.dirname(path_name),
+        "local_name": path_name.split("/")[-1],
         "directories": directories,
         "directories_length": len(directories),
         "imagens": imagens,

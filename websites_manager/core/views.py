@@ -10,7 +10,9 @@ import magic
 # Create your views here.
 
 def home(request):
-    context = {}
+    context = {
+        "active": "home"
+    }
 
     return render(request, "home.html", context)
 
@@ -61,6 +63,7 @@ def file_serve(request, path_name):
             })
 
     context = {
+        "active": "file_serve",
         "path_name": path_name,
         "path_back": path.dirname(path_name),
         "local_name": path_name.split("/")[-1],

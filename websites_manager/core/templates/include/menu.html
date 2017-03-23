@@ -12,9 +12,10 @@
     </div>
     <div id="navbar_menu" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'core:file_serve' '' %}">Arquivos</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li {% if active == "home" %}class="active"{%endif%} ><a href="{% url 'home' %}">Home</a></li>
+        <li {% if active == "file_serve" %}class="active"{%endif%} ><a href="{% url 'core:file_serve' '' %}">Arquivos</a></li>
+        <li><a href="/videos">Videos</a></li>
+        <li><a href="/transmission">Torrent</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>

@@ -26,3 +26,10 @@ def back_directories(dir_path):
 @register.filter(name="get_back_path")
 def get_back_path(dir_path):
     return path.dirname(dir_path)
+
+
+@register.filter(name="active_pach")
+def active_pach(path_now, dir_path):
+    if path_now == dir_path:
+        return 'active'
+    return ''

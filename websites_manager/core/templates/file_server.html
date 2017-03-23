@@ -1,6 +1,6 @@
 {% extends "include/base.html" %}
 {% load templates_tools %}
-{% block title %} Pasta {{ path_local }} {% endblock %}
+{% block title %} Pasta {{ path_name }} {% endblock %}
 
 {% block content %}
     <div >
@@ -12,7 +12,7 @@
     {% if directories_length %}
       <div class="row">
           <div class="col-md-12">
-              {% if not path_name %}
+              {% if path_name %}
                 <a class="btn btn-xs btn-primary" href="{% url 'core:file_serve' path_back %}">Nivel acima</a>
               {% endif %}
               <table class="table">
@@ -35,33 +35,34 @@
       </div>
     {% else %}
       <nav class="navbar navbar-inverse">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu_directore">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">Diretorios</a>
-            </div>
-            <div class="navbar-collapse collapse" id="menu_directore">
-              <ul class="nav navbar-nav">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pastas <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="{% url 'core:file_serve' path_back|get_back_path %}">Nivel acima</a></li>
-                    <li role="separator" class="divider"></li>
-                    {% for path in path_back|back_directories %}
-                      <li><a href="{% url 'core:file_serve' path.path %}">{{ path.name }}</a></li>
-                    {% endfor %}
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.nav-collapse -->
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu_directore">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Diretorios</a>
           </div>
-        </nav>
-
+          <div class="navbar-collapse collapse" id="menu_directore">
+            <ul class="nav navbar-nav">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pastas <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'core:file_serve' path_back|get_back_path %}">Nivel acima</a></li>
+                  <li role="separator" class="divider"></li>
+                  {% for path in path_back|back_directories %}
+                    <li  class="{{ path_name|active_pach:path.path }}">
+                        <a href="{% url 'core:file_serve' path.path %}">{{ path.name }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
     {% endif %}
 
     {% if imagens_length %}
@@ -85,40 +86,38 @@
           </a>
       </div>
     {% endif %}
+
     {% if videos_length %}
        <h4>Videos</h4>
-      {% for video in videos %}
-        <!-- 16:9 aspect ratio -->
-        <div class="embed-responsive embed-responsive-16by9">
-            <video autoplay loop class="embed-responsive-item" alt="{{ video.name }}">
-                <source src="{{ video.path }}" type="{{ video.mine_type }}">
-            </video>
-        </div>
-        <hr />
-      {% endfor %}
-      {% endif %}
-
-      {% if others_length %}
-        <h4>Arquivos</h4>
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Local</th>
-                      </tr>
-                    </thead>
-                <tbody>
-                    {% for other in others %}
-                      <tr>
-                        <td>
-                            <a href="{{other.path}}" target="blank">{{ other.name }}</a>
-                        </td>
-                      </tr>
-                    {% endfor %}
-                </tbody>
-              </table>
-            </div>
+       <div class="list-group">
+          {% for video in videos %}
+              <a href="{{ video.path }}" class="list-group-item" alt="{{ video.name }}">{{ video.name }}</a>
+          {% endfor %}
         </div>
     {% endif %}
+
+    {% if others_length %}
+      <h4>Arquivos</h4>
+      <div class="row">
+          <div class="col-md-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Local</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for other in others %}
+                  <tr>
+                    <td>
+                        <a href="{{other.path}}" target="blank">{{ other.name }}</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+      </div>
+    {% endif %}
+
 {% endblock%}

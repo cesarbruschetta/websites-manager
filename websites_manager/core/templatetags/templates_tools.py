@@ -4,6 +4,7 @@ from django.conf import settings
 from django.utils.encoding import force_bytes
 from os import scandir, path
 
+
 register = template.Library()
 
 

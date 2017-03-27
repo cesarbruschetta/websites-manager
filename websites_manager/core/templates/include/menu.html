@@ -13,8 +13,12 @@
     <div id="navbar_menu" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li {% if active == "home" %}class="active"{%endif%} ><a href="{% url 'home' %}">Home</a></li>
-        <li {% if active == "file_serve" %}class="active"{%endif%} ><a href="{% url 'core:file_serve' '' %}">Arquivos</a></li>
-        <li><a href="/videos">Videos</a></li>
+
+        {% for filepath in file_paths %}
+          <li {% if active == "file_serve" and filepath.slug == path_slug %}class="active"{%endif%} >
+            <a href="{% url 'core:file_serve' filepath.slug '' %}">{{ filepath.title }}</a></li>
+        {% endfor %}
+
         <li><a href="/transmission">Torrent</a></li>
       </ul>
     </div><!--/.nav-collapse -->

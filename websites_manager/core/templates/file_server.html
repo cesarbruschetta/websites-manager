@@ -13,7 +13,7 @@
       <div class="row">
           <div class="col-md-12">
               {% if path_name %}
-                <a class="btn btn-xs btn-primary" href="{% url 'core:file_serve' path_back %}">Nivel acima</a>
+                <a class="btn btn-xs btn-primary" href="{% url 'core:file_serve' path_slug path_back %}">Nivel acima</a>
               {% endif %}
               <table class="table">
                   <thead>
@@ -25,7 +25,7 @@
                   {% for path in directories %}
                     <tr>
                       <td>
-                          <a href="{% url 'core:file_serve' path.path %}">{{ path.name }}</a>
+                          <a href="{% url 'core:file_serve' path_slug path.path %}">{{ path.name }}</a>
                       </td>
                     </tr>
                   {% endfor %}
@@ -50,11 +50,11 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pastas <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="{% url 'core:file_serve' path_back|get_back_path %}">Nivel acima</a></li>
+                  <li><a href="{% url 'core:file_serve' path_slug path_back|get_back_path %}">Nivel acima</a></li>
                   <li role="separator" class="divider"></li>
                   {% for path in path_back|back_directories %}
                     <li  class="{{ path_name|active_pach:path.path }}">
-                        <a href="{% url 'core:file_serve' path.path %}">{{ path.name }}</a>
+                        <a href="{% url 'core:file_serve' path_slug path.path %}">{{ path.name }}</a>
                     </li>
                   {% endfor %}
                 </ul>

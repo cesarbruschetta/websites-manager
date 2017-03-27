@@ -1,7 +1,8 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 from django.utils.encoding import force_bytes
+from .models import FilePathModel
 
 from os import scandir, path
 import magic
@@ -17,10 +18,14 @@ def home(request):
     return render(request, "home.html", context)
 
 
-def file_serve(request, path_name):
+def file_serve(request, path_slug, path_name):
     template_name = "file_server.html"
 
-    local_path = path.join(settings.FILE_PATH_ROOT, path_name)
+
+    obj_path = get_object_or_404(FilePathModel, slug=path_slug)
+
+
+    local_path = path.join(obj_path.path_root, path_name)
 
     # import pdb; pdb.set_trace()
 
@@ -32,8 +37,8 @@ def file_serve(request, path_name):
         file_path = force_bytes(entry.path).decode('utf8', 'surrogateescape')
 
         if entry.is_file():
-            file_path = file_path.replace(settings.FILE_PATH_ROOT,
-                                          settings.FILE_PATH_URL)
+            file_path = file_path.replace(obj_path.path_root,
+                                          obj_path.path_url)
             try:
                 mine_type = magic.from_file(entry.path, mime=True)
             except Exception:
@@ -59,11 +64,12 @@ def file_serve(request, path_name):
         if entry.is_dir():
             directories.append({
                 "name": entry.name,
-                "path": file_path.replace(settings.FILE_PATH_ROOT, "")
+                "path": file_path.replace(obj_path.path_root, "")
             })
 
     context = {
         "active": "file_serve",
+        "path_slug": path_slug,
         "path_name": path_name,
         "path_back": path.dirname(path_name),
         "local_name": path_name.split("/")[-1],

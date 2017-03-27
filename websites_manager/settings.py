@@ -60,13 +60,14 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(PROJECT_ROOT_PATH, 'core/templates')
         ],
-        # 'APP_DIRS': True,
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "websites_manager.core.context_processors.get_file_path",
             ],
         },
     },
@@ -176,9 +177,6 @@ if DEBUG:
     INSTALLED_APPS += ("debug_toolbar", )
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
 
-
-FILE_PATH_ROOT = "/home/ubuntu/"
-FILE_PATH_URL = "/static_files/"
 
 try:
     from .custom_settings import *

@@ -1,14 +1,12 @@
 
 from django.shortcuts import render, get_object_or_404
-from django.conf import settings
 from django.utils.encoding import force_bytes
+from django.http import Http404
 from .models import FilePathModel
 
 from os import scandir, path
 import magic
 
-
-# Create your views here.
 
 def home(request):
     context = {
@@ -21,19 +19,19 @@ def home(request):
 def file_serve(request, path_slug, path_name):
     template_name = "file_server.html"
 
-
     obj_path = get_object_or_404(FilePathModel, slug=path_slug)
 
-
     local_path = path.join(obj_path.path_root, path_name)
-
-    # import pdb; pdb.set_trace()
+    try:
+        scandir_obj = scandir(local_path)
+    except FileNotFoundError as ex:
+        raise Http404(str(ex))
 
     imagens = []
     videos = []
     others = []
     directories = []
-    for entry in scandir(local_path):
+    for entry in scandir_obj:
         file_path = force_bytes(entry.path).decode('utf8', 'surrogateescape')
 
         if entry.is_file():
@@ -74,13 +72,13 @@ def file_serve(request, path_slug, path_name):
         "obj_path": obj_path,
         "path_back": path.dirname(path_name),
         "local_name": path_name.split("/")[-1],
-        "directories": directories,
+        "directories": sorted(directories, key=lambda k: k['name']),
         "directories_length": len(directories),
-        "imagens": imagens,
+        "imagens": sorted(imagens, key=lambda k: k['name']),
         "imagens_length": len(imagens),
-        "videos": videos,
+        "videos": sorted(videos, key=lambda k: k['name']),
         "videos_length": len(videos),
-        "others": others,
+        "others": sorted(others, key=lambda k: k['name']),
         "others_length": len(others),
     }
 

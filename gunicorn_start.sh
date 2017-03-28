@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NAME="websites_manager"                           # Name of the application
-DJANGODIR=$(pwd)                                  # Django project directory
+DJANGODIR=$(dirname ${BASH_SOURCE[0]})            # Django project directory
 SOCKFILE=/tmp/gunicorn.sock                       # we will communicte using this unix socket
 USER=$(whoami)                                    # the user to run as
 GROUP=$(whoami)                                   # the group to run as
@@ -9,6 +9,7 @@ NUM_WORKERS=3                                     # how many worker processes sh
 DJANGO_SETTINGS_MODULE=websites_manager.settings  # which settings file should Django use
 DJANGO_WSGI_MODULE=websites_manager.wsgi          # WSGI module name
 
+echo $DJANGODIR
 echo "Starting $NAME as `whoami`"
 
 # Activate the virtual environment

@@ -28,7 +28,7 @@ urlpatterns = [
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.FILE_PATH_URL, document_root=settings.FILE_PATH_ROOT)
+# urlpatterns += static(settings.FILE_PATH_URL, document_root=settings.FILE_PATH_ROOT)
 
 
 if settings.DEBUG:

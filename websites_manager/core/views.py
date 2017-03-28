@@ -71,6 +71,7 @@ def file_serve(request, path_slug, path_name):
         "active": "file_serve",
         "path_slug": path_slug,
         "path_name": path_name,
+        "obj_path": obj_path,
         "path_back": path.dirname(path_name),
         "local_name": path_name.split("/")[-1],
         "directories": directories,

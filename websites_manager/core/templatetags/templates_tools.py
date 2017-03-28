@@ -1,17 +1,16 @@
 
 from django import template
-from django.conf import settings
 from django.utils.encoding import force_bytes
 from os import scandir, path
-
 
 register = template.Library()
 
 
 @register.filter(name="back_directories")
-def back_directories(dir_path):
+def back_directories(path_root, dir_path):
     directories = []
-    local_path = path.join(settings.FILE_PATH_ROOT, dir_path)
+
+    local_path = path.join(path_root, dir_path)
 
     for entry in scandir(local_path):
         file_path = force_bytes(entry.path).decode('utf8', 'surrogateescape')
@@ -19,7 +18,7 @@ def back_directories(dir_path):
         if entry.is_dir():
             directories.append({
                 "name": entry.name,
-                "path": file_path.replace(settings.FILE_PATH_ROOT, "")
+                "path": file_path.replace(path_root, "")
             })
     return directories
 

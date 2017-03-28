@@ -16,3 +16,13 @@ body {
 .theme-showcase .navbar .container {
   width: auto;
 }
+
+
+
+.truncate-word{
+  display: block;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

@@ -25,7 +25,7 @@
                   {% for path in directories %}
                     <tr>
                       <td>
-                          <a href="{% url 'core:file_serve' path_slug path.path %}">{{ path.name }}</a>
+                          <a href="{% url 'core:file_serve' path_slug path.path %}" class="truncate-word">{{ path.name }}</a>
                       </td>
                     </tr>
                   {% endfor %}
@@ -52,7 +52,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="{% url 'core:file_serve' path_slug path_back|get_back_path %}">Nivel acima</a></li>
                   <li role="separator" class="divider"></li>
-                  {% for path in path_back|back_directories %}
+                  {% for path in obj_path.path_root|back_directories:path_back %}
                     <li  class="{{ path_name|active_pach:path.path }}">
                         <a href="{% url 'core:file_serve' path_slug path.path %}">{{ path.name }}</a>
                     </li>
@@ -91,7 +91,7 @@
        <h4>Videos</h4>
        <div class="list-group">
           {% for video in videos %}
-              <a href="{{ video.path }}" class="list-group-item" alt="{{ video.name }}">{{ video.name }}</a>
+              <a href="{{ video.path }}" class="list-group-item truncate-word" alt="{{ video.name }}">{{ video.name }}</a>
           {% endfor %}
         </div>
     {% endif %}
@@ -110,7 +110,7 @@
                 {% for other in others %}
                   <tr>
                     <td>
-                        <a href="{{other.path}}" target="blank">{{ other.name }}</a>
+                        <a href="{{other.path}}" target="blank" class="truncate-word">{{ other.name }}</a>
                     </td>
                   </tr>
                 {% endfor %}

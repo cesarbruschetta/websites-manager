@@ -20,7 +20,7 @@ def back_directories(path_root, dir_path):
                 "name": entry.name,
                 "path": file_path.replace(path_root, "")
             })
-    return directories
+    return sorted(directories, key=lambda k: k['name']),
 
 
 @register.filter(name="get_back_path")

@@ -7,30 +7,20 @@
         <h3>Pasta Atual
           <span class="label label-primary">{{ local_name }}</span>
         </h3>
+        {% if path_name %}
+          <a class="btn btn-xs btn-primary" href="{% url 'core:file_serve' path_slug path_back %}">Nivel acima</a>
+        {% endif %}
     </div>
 
     {% if directories_length %}
+      <h4>Pastas</h4>
       <div class="row">
           <div class="col-md-12">
-              {% if path_name %}
-                <a class="btn btn-xs btn-primary" href="{% url 'core:file_serve' path_slug path_back %}">Nivel acima</a>
-              {% endif %}
-              <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Local</th>
-                    </tr>
-                  </thead>
-              <tbody>
-                  {% for path in directories %}
-                    <tr>
-                      <td>
-                          <a href="{% url 'core:file_serve' path_slug path.path %}" class="truncate-word">{{ path.name }}</a>
-                      </td>
-                    </tr>
-                  {% endfor %}
-              </tbody>
-            </table>
+             <div class="list-group">
+                {% for path in directories %}
+                  <a href="{% url 'core:file_serve' path_slug path.path %}" class="list-group-item  truncate-word">{{ path.name }}</a>
+                {% endfor %}
+              </div>
           </div>
       </div>
     {% else %}
@@ -100,22 +90,11 @@
       <h4>Arquivos</h4>
       <div class="row">
           <div class="col-md-12">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Local</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for other in others %}
-                  <tr>
-                    <td>
-                        <a href="{{other.path}}" target="blank" class="truncate-word">{{ other.name }}</a>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+           <div class="list-group">
+              {% for other in others %}
+                 <a href="{{other.path}}" target="blank" class="list-group-item truncate-word">{{ other.name }}</a>
+              {% endfor %}
+           </div>
           </div>
       </div>
     {% endif %}

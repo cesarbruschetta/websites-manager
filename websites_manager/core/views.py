@@ -1,8 +1,8 @@
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.encoding import force_bytes
 from django.http import Http404
-from .models import FilePathModel
+from .models import FilePathModel, LinksModel
 
 from os import scandir, path
 import magic
@@ -16,6 +16,12 @@ def home(request):
     return render(request, "home.html", context)
 
 
+def redirect_link(request, path_slug):
+
+    obj_link = get_object_or_404(LinksModel, slug=path_slug)
+    return redirect(obj_link.link_url)
+
+
 def file_serve(request, path_slug, path_name):
     template_name = "file_server.html"
 
@@ -24,7 +30,7 @@ def file_serve(request, path_slug, path_name):
     local_path = path.join(obj_path.path_root, path_name)
     try:
         scandir_obj = scandir(local_path)
-    except FileNotFoundError as ex:
+    except Exception as ex:
         raise Http404(str(ex))
 
     imagens = []
